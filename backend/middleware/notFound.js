@@ -1,6 +1,9 @@
+import { errorResponse } from "../utils/response.js";
+
 const notFound = (req, res) => {
-    res.status(404).json({
-        message: "Route not found",
+    return errorResponse(res, {
+        statusCode: 404,
+        message: "Route not found.",
     });
 };
 
