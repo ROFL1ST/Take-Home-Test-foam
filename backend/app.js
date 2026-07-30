@@ -14,8 +14,7 @@ const app = express();
 
 app.use(cors());
 app.use(express.json());
-app.use(notFound);
-app.use(errorHandler);
+
 
 db.sequelize
     .authenticate()
@@ -35,3 +34,6 @@ const PORT = process.env.PORT || 3001;
 app.listen(PORT, () => {
     console.log(`Server running on port ${PORT}`);
 });
+
+app.use(notFound);
+app.use(errorHandler);
