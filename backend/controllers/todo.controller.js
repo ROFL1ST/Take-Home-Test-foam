@@ -1,5 +1,5 @@
 import { createRequire } from "module";
-
+import { successResponse, errorResponse } from "../utils/response.js";
 const require = createRequire(import.meta.url);
 const db = require("../models/index.cjs");
 
@@ -11,7 +11,10 @@ export const getTodos = async (req, res, next) => {
       order: [["id", "ASC"]],
     });
 
-    res.status(200).json(todos);
+    return successResponse(res, {
+      message: "Todos retrieved successfully.",
+      data: todos,
+    });
   } catch (error) {
     next(error);
   }
@@ -32,7 +35,11 @@ export const createTodo = async (req, res, next) => {
       description,
     });
 
-    res.status(201).json(todo);
+    return successResponse(res, {
+      statusCode: 201,
+      message: "Todo created successfully.",
+      data: todo,
+    });
   } catch (error) {
     next(error);
   }
@@ -62,7 +69,10 @@ export const updateTodo = async (req, res, next) => {
       completed: completed ?? todo.completed,
     });
 
-    res.json(todo);
+    return successResponse(res, {
+      message: "Todo updated successfully.",
+      data: todo,
+    });
   } catch (error) {
     next(error);
   }
@@ -82,8 +92,8 @@ export const deleteTodo = async (req, res, next) => {
 
     await todo.destroy();
 
-    res.json({
-      message: "Todo deleted successfully",
+    return successResponse(res, {
+      message: "Todo deleted successfully.",
     });
   } catch (error) {
     next(error);
